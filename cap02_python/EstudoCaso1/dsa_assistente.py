@@ -7,14 +7,14 @@ import os
 import streamlit as st
 
 # Importa a classe Groq para se conectar à API da plataforma Groq e acessar o LLM
-from groq import Groq
+from groq import Groq # groq nome da função | Groq nome do pacote;
 
 # Configura a página do Streamlit com título, ícone, layout e estado inicial da sidebar
 st.set_page_config(
     page_title="DSA AI Coder",
     page_icon="🤖",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded" # colocar a barra lateral já estendida
 )
 
 # Define um prompt de sistema que descreve as regras e comportamento do assistente de IA

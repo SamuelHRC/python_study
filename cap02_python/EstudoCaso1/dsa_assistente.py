@@ -19,7 +19,8 @@ st.set_page_config(
 
 # Define um prompt de sistema que descreve as regras e comportamento do assistente de IA
 CUSTOM_PROMPT = """
-Você é o "DSA Coder", um assistente de IA especialista em programação, com foco principal em Python. Sua missão é ajudar desenvolvedores iniciantes com dúvidas de programação de forma clara, precisa e útil.
+Você é o "DSA Coder", um assistente de IA especialista em programação, com foco principal em Python. Sua missão é ajudar 
+desenvolvedores iniciantes com dúvidas de programação de forma clara, precisa e útil.
 
 REGRAS DE OPERAÇÃO:
 1.  **Foco em Programação**: Responda apenas a perguntas relacionadas a programação, algoritmos, estruturas de dados, bibliotecas e frameworks. Se o usuário perguntar sobre outro assunto, responda educadamente que seu foco é exclusivamente em auxiliar com código.
@@ -60,6 +61,9 @@ with st.sidebar:
     # Botão de link para enviar e-mail ao suporte da DSA
     st.link_button("✉️ E-mail Para o Suporte DSA no Caso de Dúvidas", "mailto:suporte@datascienceacademy.com.br")
 
+
+# SAINDO DA BARRA LATERAL E INDO PARA A ÁREA PRINCIPAL -----------------------------
+
 # Título principal do app
 st.title("Data Science Academy - DSA AI Coder")
 
@@ -68,6 +72,8 @@ st.title("Assistente Pessoal de Programação Python 🐍")
 
 # Texto auxiliar abaixo do título
 st.caption("Faça sua pergunta sobre a Linguagem Python e obtenha código, explicações e referências.")
+
+# PREPARAÇÃO AGORA DO HISTÓRICO DE MENSAGENS ----------------------------------------
 
 # Inicializa o histórico de mensagens na sessão, caso ainda não exista
 if "messages" not in st.session_state:
@@ -78,6 +84,8 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
+
+# INICIALIZANDO O CLIENTE GROQ ------------------------------------------------------
 # Inicializa a variável do cliente Groq como None
 client = None
 
@@ -99,6 +107,7 @@ if groq_api_key:
 elif st.session_state.messages:
      st.warning("Por favor, insira sua API Key da Groq na barra lateral para continuar.")
 
+# -----------------------------------
 # Captura a entrada do usuário no chat
 if prompt := st.chat_input("Qual sua dúvida sobre Python?"):
     
@@ -130,9 +139,9 @@ if prompt := st.chat_input("Qual sua dúvida sobre Python?"):
                 # Chama a API da Groq para gerar a resposta do assistente
                 chat_completion = client.chat.completions.create(
                     messages = messages_for_api,
-                    model = "openai/gpt-oss-20b", 
-                    temperature = 0.7,
-                    max_tokens = 2048,
+                    model = "openai/gpt-oss-20b", # indicando o LLM que será usado;
+                    temperature = 0.7, # quanto maior, mais criativa a resposta
+                    max_tokens = 2048, 
                 )
                 
                 # Extrai a resposta gerada pela API
